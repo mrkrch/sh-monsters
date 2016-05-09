@@ -6,4 +6,5 @@ Various command line scenarios and tips.
 ```
 [cmd.exe]
     dt=kd -z C:\Windows\System32\$1.dll -c "dt $1!_$2;q" | sed '/^0:000/,/^quit:/!d;//d'
+    sizeof=kd -z C:\Windows\system32\$1.dll -c "?? sizeof($1!_$2);? @$exp;q" | findstr /birc:"evaluate"
 ```
