@@ -67,7 +67,7 @@ which=for %i in (%pathext%;.DLL;.CPL;.MSC) do @for %j in ($1%i) do @if exist "%~
       doskey %1=start "Bash" "%root%\bash.exe" --login -i
     )
     if "%1" equ "wget" (
-      doskey %1="%root%\wget.exe" $*
+      if exist "%root%\wget.exe" doskey %1="%root%\wget.exe" $*
     )
 exit /b
 
