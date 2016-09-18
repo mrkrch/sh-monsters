@@ -10,5 +10,5 @@
     endlocal
   exit /b
 --]]
-set ::
+_____ ::
 for i, j in ipairs(arg) do print(j) end
