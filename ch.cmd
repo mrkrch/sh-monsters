@@ -4,7 +4,7 @@
     for %%i in (%*) do set /a "i+=1"
     if !i! neq 1 goto:man
     
-    set "map=CMD;CS;JS;HTA;LUA;PHP;PL;PS1;PY;RB;SH;TCL;VBS;WSF"
+    set "map=CMD;CS;JS;JSN;HTA;LUA;PHP;PL;PS1;PY;RB;SH;TCL;VBS;WSF"
     call:toUpper %1
     for %%i in (!map!) do if /i "!$!" equ "%%i" set "#=%%i"
     if /i "!#!" equ "" goto:man
@@ -33,7 +33,7 @@ exit /b
 
 :man
   for %%i in (
-    "%~n0 v2.03"
+    "%~n0 v2.04"
     "Copyright (C) 2015-2016 greg zakharov"
     ""
     "Usage: %~n0 [extension]"
@@ -41,6 +41,7 @@ exit /b
     "   cmd - pure cmd template"
     "   cs  - CMD\CSharp template"
     "   js  - CMD\JavaScript (MS JScript or NodeJS)"
+    "   jsn - CMD\JScript.NET template"
     "   hta - CMD\HTA template"
     "   lua - CMD\Lua template"
     "   php - CMD\PHP template"
@@ -71,12 +72,11 @@ exit /b
       '2^>nul reg query %key% /v InstallRoot'
     ) do set "root=%%i"
     if /i "%root%" equ "" echo:Could not find .NET root.
-    
-    for /f "delims=" %%i in (
-      'dir /ad /b "%root%" ^| findstr /irc:"v[0-9.].*"'
-    ) do (
-      set "csc=%root%%%i\csc.exe"
-      if exist "%csc%" set "csc=%csc%"
+    for /f %%i in ('dir /ad /b "%root%v*"') do (
+      set "path=%root%%%i;%path%"
+    )
+    for %%i in (csc.exe) do (
+      if exist "%%~$PATH:i" set "csc=%%~$PATH:i"
     )
     set "arg=/nologo /t:exe /out:app.exe /optimize+"
     set "arg=%arg% /debug:pdbonly "%~f0""
@@ -112,6 +112,31 @@ internal sealed class Program {
 exit /b */0;
 // place your code here
 :eof_JS
+
+:JSN
+@set @js=0 /*
+  @echo off
+    set @js=
+    setlocal
+      set "key=HKLM\SOFTWARE\Microsoft\.NETFramework"
+      for /f "tokens=3" %%i in (
+        '2^>nul reg query %key% /v InstallRoot'
+      ) do set "root=%%i"
+      if /i "%root%" equ "" echo:Could not find .NET root.
+      for /f %%i in ('dir /ad /b "%root%v*"') do (
+        set "path=%root%%%i;%path%"
+      )
+      for %%i in (jsc.exe) do (
+        if exist "%%~$PATH:i" set "jsc=%%~$PATH:i"
+      )
+      set "arg=/nologo /t:exe /out:app.exe /debug+ "%~f0""
+      %jsc% %arg%
+      app.exe
+    endlocal
+  exit /b
+*/
+// place your code here
+:eof_JSN
 
 :HTA
 <!-- :
