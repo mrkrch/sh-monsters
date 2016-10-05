@@ -9,6 +9,5 @@ Various command line scenarios and tips.
     sizeof=kd -z C:\Windows\System32\$1.dll -c "?? sizeof($1!_$2);? @$exp;q" | findstr /birc:"eval"
     x=kd -z C:\Windows\System32\$1.dll -c "x $1!$2;q" | findstr /birc:"[0-9a-f]* $1"
     hex=cmd /c exit /b $1&cmd /v/c echo 0x!=exitcode!
-    hdump=certutil -dump $1 | findstr /brc:" "
     macro=doskey /macros
 ```
