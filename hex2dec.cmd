@@ -21,7 +21,6 @@ exit /b
 :box
   for %%i in (
     "%~n0 v5.23 - converts hex to decimal and vice versa"
-    "Copyright (C) 2010-2016 greg zakharov"
     "[Enter .c to clear output data or .q to exit]"
     ""
   ) do echo:%%~i
