@@ -33,9 +33,6 @@ exit /b
 
 :man
   for %%i in (
-    "%~n0 v2.05"
-    "Copyright (C) 2015-2016 greg zakharov"
-    ""
     "Usage: %~n0 [extension]"
     "Where 'extension' is one of the follow:"
     "   cmd - pure cmd template"
