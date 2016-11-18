@@ -4,7 +4,7 @@
     for %%i in (%*) do set /a "i+=1"
     if !i! neq 1 goto:man
     
-    set "map=CMD;CS;JS;JSN;HTA;LUA;PHP;PL;PS1;PY;RB;SH;TCL;VBN;VBS;WSF"
+    set "map=AU3;CMD;CS;JS;JSN;HTA;LUA;PHP;PL;PS1;PY;RB;SH;TCL;VBN;VBS;WSF"
     call:toUpper %1
     for %%i in (!map!) do if /i "!$!" equ "%%i" set "#=%%i"
     if /i "!#!" equ "" goto:man
@@ -35,6 +35,7 @@ exit /b
   for %%i in (
     "Usage: %~n0 [extension]"
     "Where 'extension' is one of the follow:"
+    "   au3 - CMD\AutoIt template"
     "   cmd - pure cmd template"
     "   cs  - CMD\CSharp template"
     "   js  - CMD\JavaScript (MS JScript or NodeJS)"
@@ -53,6 +54,14 @@ exit /b
     "   wsf - CMD\WSF template"
   ) do echo:%%~i
 exit /b
+
+:AU3
+;@echo off
+;  setlocal
+;    2>nul AutoIt3.exe "%~f0" %*
+;  endlocal
+;exit /b
+:eof_AU3
 
 :CMD
 @echo off
