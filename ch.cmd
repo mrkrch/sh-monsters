@@ -4,7 +4,7 @@
     for %%i in (%*) do set /a "i+=1"
     if !i! neq 1 goto:man
     
-    set "map=AU3;CMD;CS;JS;JSN;HTA;LUA;PHP;PL;PS1;PY;RB;SH;TCL;VBN;VBS;WSF"
+    set "map=AU3;CMD;CS;JS;JSN;HTA;KIX;LUA;PHP;PL;PS1;PY;RB;SH;TCL;VBN;VBS;WSF"
     call:toUpper %1
     for %%i in (!map!) do if /i "!$!" equ "%%i" set "#=%%i"
     if /i "!#!" equ "" goto:man
@@ -41,6 +41,7 @@ exit /b
     "   js  - CMD\JavaScript (MS JScript or NodeJS)"
     "   jsn - CMD\JScript.NET template"
     "   hta - CMD\HTA template"
+    "   kix - CMD\Kixtart template"
     "   lua - CMD\Lua template"
     "   php - CMD\PHP template"
     "   pl  - CMD\Perl template"
@@ -61,6 +62,7 @@ exit /b
 ;    2>nul AutoIt3.exe "%~f0" %*
 ;  endlocal
 ;exit /b
+; place your code here
 :eof_AU3
 
 :CMD
@@ -168,6 +170,15 @@ exit /b */0;
   </body>
 </html>
 :eof_HTA
+
+:KIX
+;@echo off
+;  setlocal
+;    2>nul Kix32.exe "%~f0" %*
+;  endlocal
+;exit /b
+; place your code here
+:eof_KIX
 
 :LUA
 :: --[[
