@@ -4,7 +4,7 @@
     for %%i in (%*) do set /a "i+=1"
     if !i! neq 1 goto:man
     
-    set "map=AU3;CMD;CS;JS;JSN;HTA;KIX;LUA;PHP;PL;PS1;PY;RB;SH;TCL;VBN;VBS;WSF"
+    set "map=ASM;AU3;CMD;CS;JS;JSN;HTA;KIX;LUA;PHP;PL;PS1;PY;RB;SH;TCL;VBN;VBS;WSF"
     call:toUpper %1
     for %%i in (!map!) do if /i "!$!" equ "%%i" set "#=%%i"
     if /i "!#!" equ "" goto:man
@@ -34,7 +34,9 @@ exit /b
 :man
   for %%i in (
     "Usage: %~n0 [extension]"
+    ""
     "Where 'extension' is one of the follow:"
+    "   asm - CMD\Assembler example (not template)"
     "   au3 - CMD\AutoIt template"
     "   cmd - pure cmd template"
     "   cs  - CMD\CSharp template"
@@ -53,8 +55,42 @@ exit /b
     "   vbn - CMD\VB.NET template"
     "   vbs - CMD\VBscript template"
     "   wsf - CMD\WSF template"
+    ""
+    "Note that 'asm' requires NASM (tested version 2.12.02) and"
+    "link.exe (included into MS toolkit of code compilation)."
+    "In fact, you can also use GCC."
   ) do echo:%%~i
 exit /b
+
+:ASM
+;@echo off
+;  setlocal
+;    set "obj="%~dpn0.obj""
+;    set "lnk=link.exe /nologo /subsystem:console"
+;    set "lnk=%lnk% %obj% /out:app.exe msvcrt.lib"
+;    set "app="%~dp0app.exe""
+;    nasm -fwin32 "%~f0"
+;    %lnk%
+;    app.exe
+;    for %%i in (%obj% %app%) do (
+;      if exist %%i del /f /q %%i
+;    )
+;  endlocal
+;exit /b
+global _main
+extern _printf
+
+section .data
+   str: db 'Sample code', 0xA, 0
+section .text
+   _main:
+      sub  esp, 4
+      lea  eax, [str]
+      mov  [esp], eax
+      call _printf
+      add  esp, 4
+      ret
+:eof_ASM
 
 :AU3
 ;@echo off
