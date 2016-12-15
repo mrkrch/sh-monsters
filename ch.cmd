@@ -105,11 +105,9 @@ section .text
 :C
 /* 2>nul
   @echo off
-    setlocal
-      cl /nologo /MD /O2 /Feapp.exe /Tc "%~f0">nul
-      app.exe
-      del /f /q app.exe "%~dpn0.obj"
-    endlocal
+    cl /nologo /MD /O2 /Feapp.exe /Tc "%~f0">nul
+    app.exe
+    del /f /q app.exe "%~dpn0.obj
   exit /b
 */
 
