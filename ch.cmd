@@ -4,7 +4,7 @@
     for %%i in (%*) do set /a "i+=1"
     if !i! neq 1 goto:man
     
-    set "map=ASM;AU3;CMD;CS;JS;JSN;HTA;KIX;LUA;PHP;PL;PS1;PY;RB;SH;TCL;VBN;VBS;WSF"
+    set "map=ASM;AU3;C;CMD;CS;JS;JSN;HTA;KIX;LUA;PHP;PL;PS1;PY;RB;SH;TCL;VBN;VBS;WSF"
     call:toUpper %1
     for %%i in (!map!) do if /i "!$!" equ "%%i" set "#=%%i"
     if /i "!#!" equ "" goto:man
@@ -39,6 +39,7 @@ exit /b
     "   asm - CMD\Assembler example (not template)"
     "   au3 - CMD\AutoIt template"
     "   cmd - pure cmd template"
+    "   c   - CMD\C template"
     "   cs  - CMD\CSharp template"
     "   js  - CMD\JavaScript (MS JScript or NodeJS)"
     "   jsn - CMD\JScript.NET template"
@@ -100,6 +101,58 @@ section .text
 ;exit /b
 ; place your code here
 :eof_AU3
+
+:C
+/* 2>nul
+  @echo off
+    setlocal
+      cl /nologo /MD /O2 /Feapp.exe /Tc "%~f0">nul
+      app.exe
+      del /f /q app.exe "%~dpn0.obj"
+    endlocal
+  exit /b
+*/
+
+#include <windows.h>
+#include <stdio.h>
+
+void StdOutClear(void) {
+  COORD coord;
+  SHORT width;
+  PCHAR space;
+  HANDLE hndl;
+  CONSOLE_SCREEN_BUFFER_INFO csbi;
+  
+  if (INVALID_HANDLE_VALUE != (
+    hndl = GetStdHandle(STD_OUTPUT_HANDLE
+  ))) {
+    if (GetConsoleScreenBufferInfo(hndl, &csbi)) {
+      coord.X = csbi.dwCursorPosition.X;
+      coord.Y = csbi.dwCursorPosition.Y - 1;
+      
+      if (SetConsoleCursorPosition(hndl, coord)) {
+        width = csbi.dwSize.X - 1;
+        space = malloc(width);
+        memset(space, ' ', width);
+        space[width] = '\0';
+        printf("%s", space);
+        
+        free(space);
+        
+        coord.Y = csbi.dwCursorPosition.Y - 2;
+        SetConsoleCursorPosition(hndl, coord);
+      }
+    }
+  }
+}
+
+int main(void) {
+  StdOutClear();
+  // place your code here
+  
+  return 0;
+}
+:eof_C
 
 :CMD
 @echo off
