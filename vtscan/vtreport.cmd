@@ -24,7 +24,6 @@
       :: get random api key
       set "sql=SELECT key FROM vtkey ORDER BY RANDOM() LIMIT 1;"
       for /f %%i in ('echo !sql! ^| sqlite3 "%db%"') do (
-        rem set "key=apikey=%%i"
         set "arg=-s --url !url! -d apikey=%%i -d"
       )
       if "!par!" equ "d" curl -G !arg:%%=domain! domain=%2
